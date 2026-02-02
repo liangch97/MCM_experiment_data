@@ -1,100 +1,100 @@
 # MCM Experiment Data
 
-美国大学生数学建模竞赛 (MCM) 电池建模与功耗分析项目的实验数据与代码仓库。
+Experiment data and code repository for battery modeling and power consumption analysis in the Mathematical Contest in Modeling (MCM).
 
-## 项目概述
+## Overview
 
-本项目包含智能手机电池放电建模的完整实验数据和分析代码，涵盖：
+This project contains complete experiment data and analysis code for smartphone battery discharge modeling, including:
 
-- **功耗建模**：基于多场景实验数据建立电池功耗模型
-- **OCV-SOC 曲线拟合**：使用 Oxford 电池数据集拟合开路电压曲线
-- **等效电路模型 (ECM)**：电池动态特性建模
-- **剩余时间预测 (TTE)**：基于模型的电池续航预测
+- **Power Consumption Modeling**: Battery power model based on multi-scenario experiment data
+- **OCV-SOC Curve Fitting**: Open-circuit voltage curve fitting using Oxford battery dataset
+- **Equivalent Circuit Model (ECM)**: Battery dynamic characteristics modeling
+- **Time-to-Empty (TTE) Prediction**: Model-based battery life prediction
 
-## 目录结构
+## Directory Structure
 
 ```
 .
-├── experiment_data/          # 实验数据目录
-│   ├── scene_baseline_off/   # 基线场景（屏幕关闭）
-│   ├── scene_brightness_*/   # 不同屏幕亮度场景 (0-255)
-│   ├── scene_cpu_*/          # 不同 CPU 负载场景 (5%-80%)
-│   ├── scene_gpu_*/          # 不同 GPU 负载场景 (20%-80%)
-│   ├── scene_wifi_compare/   # WiFi 开关对比
-│   ├── scene_mobile_compare/ # 移动网络对比
-│   ├── scene_gps_compare/    # GPS 开关对比
-│   └── scene_long_discharge_combined/  # 长时间综合放电
+├── experiment_data/          # Experiment data directory
+│   ├── scene_baseline_off/   # Baseline scenario (screen off)
+│   ├── scene_brightness_*/   # Different screen brightness levels (0-255)
+│   ├── scene_cpu_*/          # Different CPU load scenarios (5%-80%)
+│   ├── scene_gpu_*/          # Different GPU load scenarios (20%-80%)
+│   ├── scene_wifi_compare/   # WiFi on/off comparison
+│   ├── scene_mobile_compare/ # Mobile network comparison
+│   ├── scene_gps_compare/    # GPS on/off comparison
+│   └── scene_long_discharge_combined/  # Long-term combined discharge
 │
-├── visualization/            # 可视化模块
-│   ├── plots_power_model.py  # 功耗模型图表
-│   ├── plots_ecm.py          # 等效电路模型图表
-│   ├── plots_ocv.py          # OCV 曲线图表
-│   ├── plots_discharge.py    # 放电曲线图表
+├── visualization/            # Visualization modules
+│   ├── plots_power_model.py  # Power model plots
+│   ├── plots_ecm.py          # ECM plots
+│   ├── plots_ocv.py          # OCV curve plots
+│   ├── plots_discharge.py    # Discharge curve plots
 │   └── ...
 │
-├── figures/                  # 生成的图表输出目录
+├── figures/                  # Generated figures output directory
 │
-├── fit_ocv_oxford.py         # OCV-SOC 曲线拟合
-├── fit_kT_wisconsin.py       # 温度容量模型拟合
-├── fit_lambda_nasa.py        # 老化模型拟合 (NASA 数据)
-├── fit_lambda_toyota.py      # 老化模型拟合 (Toyota 数据)
-├── visualize_results.py      # 可视化主入口
-├── battery_full_monitor.ps1  # 电池数据采集脚本
-└── paper.tex                 # 论文 LaTeX 源文件
+├── fit_ocv_oxford.py         # OCV-SOC curve fitting
+├── fit_kT_wisconsin.py       # Temperature-capacity model fitting
+├── fit_lambda_nasa.py        # Aging model fitting (NASA data)
+├── fit_lambda_toyota.py      # Aging model fitting (Toyota data)
+├── visualize_results.py      # Visualization entry point
+├── battery_full_monitor.ps1  # Battery data collection script
+└── paper.tex                 # Paper LaTeX source file
 ```
 
-## 实验数据格式
+## Experiment Data Format
 
-每个场景目录下的 `battery_monitor_log.csv` 包含以下字段：
+Each scenario directory contains a `battery_monitor_log.csv` with the following fields:
 
-| 字段 | 说明 |
-|------|------|
-| `timestamp` | 时间戳 |
-| `elapsed_sec` | 经过时间（秒） |
-| `charge_mAh` | 剩余电量（mAh） |
-| `level_pct` | 电量百分比 |
-| `voltage_mV` | 电压（mV） |
-| `temp_C` | 温度（°C） |
-| `screen` | 屏幕状态 |
-| `brightness` | 屏幕亮度 |
-| `network_type` | 网络类型 |
-| `wifi_state` | WiFi 状态 |
-| `mobile_state` | 移动网络状态 |
-| `gps` | GPS 状态 |
-| `cpu_util_pct` | CPU 利用率（%） |
-| `gpu_util_pct` | GPU 利用率（%） |
+| Field | Description |
+|-------|-------------|
+| `timestamp` | Timestamp |
+| `elapsed_sec` | Elapsed time (seconds) |
+| `charge_mAh` | Remaining charge (mAh) |
+| `level_pct` | Battery level percentage |
+| `voltage_mV` | Voltage (mV) |
+| `temp_C` | Temperature (°C) |
+| `screen` | Screen state |
+| `brightness` | Screen brightness |
+| `network_type` | Network type |
+| `wifi_state` | WiFi state |
+| `mobile_state` | Mobile network state |
+| `gps` | GPS state |
+| `cpu_util_pct` | CPU utilization (%) |
+| `gpu_util_pct` | GPU utilization (%) |
 
-## 使用方法
+## Usage
 
-### 1. 安装依赖
+### 1. Install Dependencies
 
 ```bash
 pip install numpy scipy matplotlib pandas
 ```
 
-### 2. 运行可视化
+### 2. Run Visualization
 
 ```bash
 python visualize_results.py
 ```
 
-生成的图表将保存到 `figures/` 目录。
+Generated figures will be saved to the `figures/` directory.
 
-### 3. 运行模型拟合
+### 3. Run Model Fitting
 
 ```bash
-python fit_ocv_oxford.py      # OCV-SOC 曲线拟合
-python fit_kT_wisconsin.py    # 温度-容量模型
-python fit_lambda_nasa.py     # 老化模型
+python fit_ocv_oxford.py      # OCV-SOC curve fitting
+python fit_kT_wisconsin.py    # Temperature-capacity model
+python fit_lambda_nasa.py     # Aging model
 ```
 
-## 核心模型
+## Core Models
 
-### OCV-SOC 曲线
+### OCV-SOC Curve
 
 $$OCV(SOC) = a_0 + a_1 \cdot s + a_2 \cdot s^2 + a_3 \cdot \ln(s) + a_4 \cdot \ln(1-s)$$
 
-### 功耗模型
+### Power Consumption Model
 
 $$P_{total} = P_{base} + P_{screen}(B) + P_{CPU}(u_{cpu}) + P_{GPU}(u_{gpu}) + P_{network}$$
 
@@ -102,6 +102,6 @@ $$P_{total} = P_{base} + P_{screen}(B) + P_{CPU}(u_{cpu}) + P_{GPU}(u_{gpu}) + P
 
 MIT License
 
-## 联系方式
+## Contact
 
-如有问题，请通过 GitHub Issues 联系。
+For questions, please contact via GitHub Issues.
